@@ -3,14 +3,22 @@ from gpt4 import generate_gpt4_response
 from tts import text_to_speech
 
 def main():
-    audio_data = get_audio_input()
-    transcribed_text = transcribe_audio(audio_data)
+    while True:
+        audio_data = get_audio_input()
+        text = transcribe_audio(audio_data)
 
-    if transcribed_text:
-        print(f"Input: {transcribed_text}")
-        gpt4_response = generate_gpt4_response(transcribed_text)
-        print(f"Output: {gpt4_response}")
-        text_to_speech(gpt4_response)
+        if text is not None:
+            print(f"Input: {text}")
+
+            if text == "終了":
+                print("プログラムを終了します。")
+                break
+
+            response = generate_gpt4_response(text)
+            print(f"Output: {response}")
+            text_to_speech(response)
+        else:
+            print("Error: ")
 
 if __name__ == "__main__":
     main()
